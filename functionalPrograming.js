@@ -54,7 +54,7 @@ const any = (...par) => data => par.reduce((result, fn) => fn(data) || result , 
 
 const flow = (...par) => data => par.reduce((result, fn) => fn(result) , data);    
 
-const combine = (...par) => data => par.reverse().reduce((result, fn) => fn(result), data); 
+const combine = (...par) => data => par.reduceRight((result, fn) => fn(result), data); 
 
 
 const maxBlackRectengleArea = flow(
