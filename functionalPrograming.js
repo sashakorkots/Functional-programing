@@ -17,6 +17,12 @@ let array = [
         'heigth': 4,
         'width': 4,
         'color':'red'
+    },
+    {
+        'figure': 'rectengele',
+        'heigth': 6,
+        'width': 6,
+        'color':'black'
     }
 ];
 
@@ -38,27 +44,29 @@ const map = f => m => m.map(f);
 
 const reduce = (f, p) => m => m.reduce(f, p);
 
-const and = par => flow(par);   
+const and = (r, l) => r && l;
 
-const or = par => flow(map(par),false);
+const or = (r, l) => r || l;
 
-/* const any = (...par) => par.reduce((result, fn) => result || fn, false);   
+const all = par => flow(par);   
 
-const all = (...par) => par.reduce((result, fn) => result && fn, true); */
+const any = (...par) => data => par.reduce((result, fn) => fn(data) || result , false);    
 
 const flow = (...par) => data => par.reduce((result, fn) => fn(result) , data);    
 
 const combine = (...par) => data => par.reverse().reduce((result, fn) => fn(result), data); 
 
 
-const maxRedPer = flow(
-    filter(or(hasColor('black'), isFigure('rectengele')) )/* ,
-    map(calcPerim),
-    reduce(sum, 0) */
+const maxBlackRectengleArea = flow(
+    filter(all(hasColor('black'), isFigure('rectangle')) ),
+    map(calcArea),
+    reduce(max, 0)
 )
-const maxBlackPer = flow(
-    filter(isFigure('triangle')),
-    map(calcPerim)
+const sumRedTrianglePer = flow(
+    filter(all(isFigure('triangle'), hasColor('red'))),
+    map(calcPerim),
+    reduce(sum, 0)
 )
 
-console.log(maxRedPer(array));
+console.log(maxBlackRectengleArea(array));
+console.log(sumRedTrianglePer(array));
