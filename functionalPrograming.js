@@ -48,7 +48,7 @@ const and = (r, l) => r && l;
 
 const or = (r, l) => r || l;
 
-const all = par => flow(par);   
+const all = (...par) => data => par.reduce((result, fn) => fn(data) && result , true);   
 
 const any = (...par) => data => par.reduce((result, fn) => fn(data) || result , false);    
 
@@ -58,7 +58,7 @@ const combine = (...par) => data => par.reduceRight((result, fn) => fn(result), 
 
 
 const maxBlackRectengleArea = flow(
-    filter(all(hasColor('black'), isFigure('rectangle')) ),
+    filter(all(hasColor('black'), isFigure('rectengele')) ),
     map(calcArea),
     reduce(max, 0)
 )
