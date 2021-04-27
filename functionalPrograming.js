@@ -42,15 +42,15 @@ const filter = f => m => m.filter(f);
 
 const map = f => m => m.map(f);
 
-const reduce = (f, p) => m => m.reduce(f, p);
+const reduce = (f, i) => m => m.reduce(f, i);
 
-const and = (r, l) => r && l;
+const and = (r, l) => data => r(data) && l(data);
 
-const or = (r, l) => r || l;
+const or = (r, l) => data => r(data) || l(data);
 
-const all = (...par) => data => par.reduce((result, fn) => fn(data) && result , true);   
+const all = (...par) => par.reduce(and , () => true);   
 
-const any = (...par) => data => par.reduce((result, fn) => fn(data) || result , false);    
+const any = (...par) => par.reduce(or , () => false);    
 
 const flow = (...par) => data => par.reduce((result, fn) => fn(result) , data);    
 
